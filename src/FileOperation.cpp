@@ -70,11 +70,13 @@ int FileOperation::wirteContent2File(const std::string &str_content, const std::
     std::ofstream outfile(str_filename);
     outfile << str_content;
     outfile.close();
+
+    return 0;
 }
 
 int FileOperation::readContentFromFile(std::string& str_out_content, const std::string str_filename)
 {
-
+    return 0;
 }
 
 bool FileOperation::mkdirFolder(const std::string& path)
