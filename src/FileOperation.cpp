@@ -76,7 +76,22 @@ int FileOperation::wirteContent2File(const std::string &str_content, const std::
 
 int FileOperation::readContentFromFile(std::string& str_out_content, const std::string str_filename)
 {
-    return 0;
+    str_out_content.clear();
+    std::fstream readFile(str_filename);
+    int res = 0;
+    if(readFile.is_open()) {
+        std::string readLine;
+        while(getline(readFile, readLine)) {
+            str_out_content += readLine;
+        }
+        readFile.close();
+        res = str_out_content.size();
+    }
+    else {
+        res = -1;
+    }
+
+    return res;
 }
 
 bool FileOperation::mkdirFolder(const std::string& path)

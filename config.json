@@ -1,0 +1,7 @@
+{
+    "HttpServer" : {
+        "IPAddress":"",
+        "URL":"www.bing.com",
+        "port":"80"
+    }
+}
