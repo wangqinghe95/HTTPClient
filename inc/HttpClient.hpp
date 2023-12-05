@@ -20,9 +20,19 @@ public:
 
     int sendHTTPGETRequest(const std::string str_request_parms, const std::string str_URL);
 
+    std::string getRecvMessage();
+    std::string getSendMessage();
+    std::string getIPAddress();
+
 private:
+    int saveRecvMessage(std::string&& message);
+
     std::string getGETRequestBody(const std::string str_request_parms, const std::string str_URL);
-    void writeFile(const std::string str_filename, const std::string& content);
+
+private:
+    std::string m_string_recv_message;
+    std::string m_string_send_message;
+    std::string m_string_IPAddress;
 };
 
 #endif

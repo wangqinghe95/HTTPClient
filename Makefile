@@ -1,29 +1,36 @@
-DIR_INC=./inc
+DIR_INC=./inc -I../FilesSystem/include -I../Logger/include -I../Json/include
 DIR_SRC=./src
 DIR_OBJ=./obj
 DIR_BIN=.
-MAIN_O=$(DIR_OBJ)/main.o
+
+MAIN_CPP=main.cpp
 # DIR_LIB=./lib
+
+DIR_SRC_FilesSystem := ../FilesSystem/src
+DIR_SRC_LOGGER := ../Logger/src
+DIR_SRC_JSON := ../Json/src
 
 # LIBS=-lsw3 -lswofdsdk
 
-SRC = $(wildcard ${DIR_SRC}/*.cpp)
-OBJ = $(patsubst %.cpp, ${DIR_OBJ}/%.o, $(notdir ${SRC}))
+SRC := $(wildcard ${DIR_SRC}/*.cpp)
+SRC += $(wildcard ${DIR_SRC_FilesSystem}/*.cpp)
+SRC += $(wildcard ${DIR_SRC_LOGGER}/*.cpp)
+SRC += $(wildcard ${DIR_SRC_JSON}/*.cpp)
+SRC += $(MAIN_CPP)
+OBJ := $(patsubst %.cpp, %.o, $(SRC))
 
-TARGET=main
-BIN_TARGET=$(DIR_BIN)/$(TARGET)
-INCLUDE=-I ${DIR_INC}
+TARGET := HTTPClient
+BIN_TARGET = $(DIR_BIN)/$(TARGET)
+INCLUDE = -I ${DIR_INC}
 CFLAGS = -g -Wall -std=c++11
 
-All:${DIR_OBJ} ${BIN_TARGET} ${MAIN_O}
+All:${DIR_OBJ} ${TARGET}
 
-${BIN_TARGET}:${OBJ} ${MAIN_O}
-	g++ ${CFLAGS} ${INCLUDE} ${OBJ} ${MAIN_O} -o $@
+${TARGET}:${OBJ}
+	g++ ${CFLAGS} ${OBJ} -o $@
+	mv $^ $(DIR_OBJ)
 
-${DIR_OBJ}/%.o:${DIR_SRC}/%.cpp 
-	g++ ${CFLAGS} ${INCLUDE} -c $< -o $@
-
-${MAIN_O}:main.cpp
+%.o : %.cpp 
 	g++ ${CFLAGS} ${INCLUDE} -c $< -o $@
 
 ${DIR_OBJ}:

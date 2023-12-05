@@ -73,8 +73,6 @@ int TCPClient::getIPAddressFromHostname(const char* p_hostname, char* p_out_IPAd
         return -1;
     }
     
-    // printf("IP address for %s: \n\n", p_hostname);
-
     bool b_copied = false;
     for(addrinfo* p = res; p != NULL; p = p->ai_next) {
         void *addr;

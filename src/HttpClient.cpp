@@ -10,7 +10,6 @@ const char STRING_HTTP_HOST[16] = "Host";
 const char STRING_NEWLINE_CHARACTER[16] = "\r\n";
 const char CHAR_SPACE[8] = " ";
 const char CHAR_COLON[8] = ":";
-const char FILENAME_GET_REQUEST[32] = "GETREQUEST.txt";
 
 
 HttpClient::HttpClient() : m_pTCPClient(std::make_shared<TCPClient>())
@@ -29,6 +28,7 @@ int HttpClient::connectServerByIPAddress(const std::string str_IPAddress,const i
 int HttpClient::connectServerByHostName(const std::string str_hostname,const int n_port)
 {
     std::string str_IPAddress = m_pTCPClient->getIPAddressFromHostname(str_hostname);
+    m_string_IPAddress = str_IPAddress;
     return m_pTCPClient->connectServer(str_IPAddress, n_port);
 }
 
@@ -64,20 +64,35 @@ int HttpClient::sendHTTPGETRequest(const std::string str_request_parms, const st
 {
     std::string send_message = getGETRequestBody(str_request_parms, str_URL);
 
+    m_string_send_message = send_message;
+
     std::string recv_message;
 
     m_pTCPClient->sendAndRecvMessage(send_message, recv_message);
 
-    writeFile(FILENAME_GET_REQUEST, recv_message);
+    saveRecvMessage(std::move(recv_message));
 
     return 0;
 }
 
-void HttpClient::writeFile(const std::string str_filename, const std::string& content)
+int HttpClient::saveRecvMessage(std::string&& message)
 {
-    std::ofstream outfile(str_filename);
-    // outfile << content;
-    std::cout << content << std::endl;
-    
-    outfile.close();
+    m_string_recv_message = message;
+
+    return m_string_recv_message.size();
+}
+
+std::string HttpClient::getRecvMessage()
+{
+    return m_string_recv_message;
+}
+
+std::string HttpClient::getSendMessage()
+{
+    return m_string_send_message;
+}
+
+std::string HttpClient::getIPAddress()
+{
+    return m_string_IPAddress;
 }
