@@ -7,7 +7,7 @@ A Client of getting data from HTTP Web
 ## Version
 
 | Project Name | Version | Status | Description | Author | Date | Remarks |
-| ---   | --- | --- | --- |
+| ---   | --- | --- | --- | --- | --- | ---- |
 | HttpClient | 1.0 | Done | Sending and receive message successfully | Matthew | 12/5/2023 |
 
 ### Version 1.0
